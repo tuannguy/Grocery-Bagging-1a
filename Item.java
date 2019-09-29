@@ -1,57 +1,84 @@
-/**
- * A starter class for designing a single item with its basic
- * constraints.  For CS457
- * @author cwood
- *
+import java.util.ArrayList;
+
+/*
+ * @author Tuan Nguyen
  */
 public class Item {
-	
 	private String name;
-	private int amount;
-	private int[] constraints;  //can be 0, 1, 2 to reflect nothing, +, or -
+	private int size;
+	private int constraint;
+	private ArrayList<Item> items;
+	private int number;
 	
+	public Item() {
+		name = "";
+		size = 0;
+		constraint = 0;
+		items = new ArrayList<Item>();
+		number = -1;
+	}
 	
-	public Item(String name, int amount, int[] constraints) {
+	public Item(String name) {
 		this.name = name;
-		this.amount = amount;
-		this.constraints = constraints;
+		size = 0;
+		constraint = 0;
+		items = new ArrayList<Item>();
+		number = -1;
 	}
 	
-	
-	//  The following methods are placeholders for now
-	
-	/**
-	 * Return's an item's amount in a bag
-	 * @return
-	 */
-	public int getAmount() {
-		
-		return this.amount;
+	public Item(String name, int size) {
+		this.name = name;
+		this.size = size;
+		constraint = 0;
+		items = new ArrayList<Item>();
+		number = -1;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 	
-	/**
-	 * Designed to specify amount much of an item's amount
-	 * is currently in a bag
-	 * @param amount
-	 */
-	public void setAmount(int amount) {
-		
-		this.amount = amount;
+	public int getConstraint() {
+		return constraint;
 	}
-	
+
 	public void setConstraint(int constraint) {
-		this.constraints = constraints;
+		this.constraint = constraint;
+	}
+
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
 	}
 	
-	public int[] getConstraints() {
-		
-		return this.constraints;
+	public void addItems(Item item) {
+		items.add(item);
 	}
 	
-	public String getItem() {
-		
-		return this.name;
+	public boolean checkItems(Item item) {
+		return items.contains(item);
 	}
-	
-	
 }

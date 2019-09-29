@@ -1,26 +1,77 @@
+import java.util.ArrayList;
 
+/*
+ * @author Tuan Nguyen
+ */
 public class Bag {
-
+	private int maxSize;
+	private int currentSize;
+	private int numItems;
+	private ArrayList<Item> items;
 	
-	private Item[] items;
-	private int capacity;
-	
-	
-	
-	public Bag(int capacity) {
-		this.capacity = capacity;
+	public Bag() {
+		maxSize = 0;
+		currentSize = 0;
+		numItems = 0;
+		items = new ArrayList<Item>();
 	}
 	
-	/**
-	 * Placeholder method for printing the contents of each
-	 * bag.  Note: prints the names of each item only.
-	 */
-	public void printBag() {
-		Item[] itemCopy = new Item[items.length];
-		System.arraycopy(items, 0, itemCopy, 0, items.length);
-		
-		for (int i = 0; i < itemCopy.length; i++) {
-			System.out.print(itemCopy[i].getItem() + "\t");
+	public Bag(int maxSize) {
+		this.maxSize = maxSize;
+		currentSize = 0;
+		numItems = 0;
+		items = new ArrayList<Item>();
+	}
+
+	public int getMaxSize() {
+		return maxSize;
+	}
+
+	public void setMaxSize(int maxSize) {
+		this.maxSize = maxSize;
+	}
+	
+	public int getCurrentSize() {
+		return currentSize;
+	}
+
+	public void setCurrentSize(int currentSize) {
+		this.currentSize = currentSize;
+	}
+
+	public int getNumItems() {
+		return numItems;
+	}
+
+	public void setNumItems(int numItems) {
+		this.numItems = numItems;
+	}
+
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
+		numItems = items.size();
+	}
+	
+    public void addItem(Item item) {
+    	items.add(item);
+    	numItems++;
+    	currentSize += item.getSize();
+    }
+    
+    public boolean isEmpty() {
+    	return items.isEmpty() && currentSize == 0;
+    }
+    
+	public String toString() {
+		String ret = "";
+		for (int v = 0; v < numItems-1; v++) {
+			ret += items.get(v).getName() + "\t";
 		}
+		ret += items.get(numItems-1).getName();
+		return ret;
 	}
 }
