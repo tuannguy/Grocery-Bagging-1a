@@ -6,21 +6,21 @@ import java.util.ArrayList;
 public class Bag {
 	private int maxSize;
 	private int currentSize;
-	private int numItems;
-	private ArrayList<Item> items;
+	private int numBagItems;
+	private ArrayList<Item> bagItems;
 	
 	public Bag() {
 		maxSize = 0;
 		currentSize = 0;
-		numItems = 0;
-		items = new ArrayList<Item>();
+		numBagItems = 0;
+		bagItems = new ArrayList<Item>();
 	}
 	
 	public Bag(int maxSize) {
 		this.maxSize = maxSize;
 		currentSize = 0;
-		numItems = 0;
-		items = new ArrayList<Item>();
+		numBagItems = 0;
+		bagItems = new ArrayList<Item>();
 	}
 
 	public int getMaxSize() {
@@ -39,39 +39,39 @@ public class Bag {
 		this.currentSize = currentSize;
 	}
 
-	public int getNumItems() {
-		return numItems;
+	public int getBagNumItems() {
+		return numBagItems;
 	}
 
 	public void setNumItems(int numItems) {
-		this.numItems = numItems;
+		this.numBagItems = numBagItems;
 	}
 
-	public ArrayList<Item> getItems() {
-		return items;
+	public ArrayList<Item> getBagItems() {
+		return bagItems;
 	}
 
-	public void setItems(ArrayList<Item> items) {
-		this.items = items;
-		numItems = items.size();
+	public void setBagItems(ArrayList<Item> bagItems) {
+		this.bagItems = bagItems;
+		numBagItems = bagItems.size();
 	}
 	
-    public void addItem(Item item) {
-    	items.add(item);
-    	numItems++;
+    public void addItemToBag(Item item) {
+    	bagItems.add(item);
+    	numBagItems++;
     	currentSize += item.getSize();
     }
     
     public boolean isEmpty() {
-    	return items.isEmpty() && currentSize == 0;
+    	return bagItems.isEmpty() && currentSize == 0;
     }
     
 	public String toString() {
 		String ret = "";
-		for (int v = 0; v < numItems-1; v++) {
-			ret += items.get(v).getName() + "\t";
+		for (int v = 0; v < numBagItems-1; v++) {
+			ret += bagItems.get(v).getName() + "\t";
 		}
-		ret += items.get(numItems-1).getName();
+		ret += bagItems.get(numBagItems-1).getName();
 		return ret;
 	}
 }

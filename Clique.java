@@ -34,16 +34,10 @@ public class Clique {
 		numVertices++;
 	}
 	
-	@SuppressWarnings("deprecation")
-	public void removeVertex(int v) {
-		vertices.remove(new Integer(v));
-		numVertices--;
-	}
-	
 	public String toString() {
 		String ret = "";
 		for (int v = 0; v < numVertices-1; v++) {
-			ret += v + " ";
+			ret += vertices.get(v) + " ";
 		}
 		ret += vertices.get(numVertices-1);
 		return ret;

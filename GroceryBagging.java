@@ -6,11 +6,11 @@ import java.util.ArrayList;
  * https://algosdotorg.wordpress.com/maximal-cliquesbronkerbosch-without-pivot-java/
  */
 public class GroceryBagging {
-	private static int numItems;  // TODO remove static
-	private static int numBags;  // TODO remove static
+	private static int numItems;
+	private static int numBags;
 	private static int bagMaxSize;
-	private static ArrayList<Bag> bags;  // TODO remove static
-	private static ArrayList<Item> items; // TODO remove static
+	private static ArrayList<Bag> bags;
+	private static ArrayList<Item> items;
 	private static int nodesCount; 
 	private static ArrayList<Vertex> graph; 
 	private static ArrayList<Clique> cliques;
@@ -21,13 +21,13 @@ public class GroceryBagging {
 	}
 
 	static void initGraph() { 
-		graph.clear(); 
-		for (int i = 0; i < nodesCount; i++) {
-			Vertex V = new Vertex(); 
-			V.setX(i); 
-			graph.add(V); 
-		} 
-	} 
+        graph.clear(); 
+        for (int i = 0; i < nodesCount; i++) {
+            Vertex V = new Vertex(); 
+            V.setX(i); 
+            graph.add(V); 
+        } 
+    }
 
 	private static void createGraph(int numItems) {
 
@@ -36,31 +36,35 @@ public class GroceryBagging {
 		initGraph();
 		Vertex vertU;
 		Vertex vertV;
+		Item itemU;
+		Item itemV;
 		for (int u = 0; u < items.size(); u++) {
 			for (int v = u+1; v < items.size(); v++) {
-				if (items.get(u).getConstraint() == 1 && items.get(u).getConstraint() == 1) {
-					if ( items.get(u).checkItems(items.get(v)) && items.get(v).checkItems(items.get(u)) ) {
+				itemU = items.get(u);
+				itemV = items.get(v);
+				if (itemU.getConstraint() == 1 && itemV.getConstraint() == 1) {
+					if ( itemU.checkItems(itemV.getName()) && itemV.checkItems(itemU.getName()) ) {
 						vertU = graph.get(u); 
 						vertV = graph.get(v); 
 						vertU.addNbr(vertV);
 					}
 				}
-				if (items.get(u).getConstraint() == 1 && items.get(u).getConstraint() == -1) {
-					if ( items.get(u).checkItems(items.get(v)) && !items.get(v).checkItems(items.get(u)) ) {
+				if (itemU.getConstraint() == 1 && itemV.getConstraint() == -1) {
+					if ( itemU.checkItems(itemV.getName()) && !itemV.checkItems(itemU.getName()) ) {
 						vertU = graph.get(u); 
 						vertV = graph.get(v); 
 						vertU.addNbr(vertV);
 					}
 				}
-				if (items.get(u).getConstraint() == -1 && items.get(u).getConstraint() == 1) {
-					if ( !items.get(u).checkItems(items.get(v)) && items.get(v).checkItems(items.get(u)) ) {
+				if (itemU.getConstraint() == -1 && itemV.getConstraint() == 1) {
+					if ( !itemU.checkItems(itemV.getName()) && itemV.checkItems(itemU.getName()) ) {
 						vertU = graph.get(u); 
 						vertV = graph.get(v); 
 						vertU.addNbr(vertV);
 					}
 				}
-				if (items.get(u).getConstraint() == -1 && items.get(u).getConstraint() == -1) {
-					if ( !items.get(u).checkItems(items.get(v)) && !items.get(v).checkItems(items.get(u)) ) {
+				if (itemU.getConstraint() == -1 && itemV.getConstraint() == -1) {
+					if ( !itemU.checkItems(itemV.getName()) && !itemV.checkItems(itemU.getName()) ) {
 						vertU = graph.get(u); 
 						vertV = graph.get(v); 
 						vertU.addNbr(vertV);
@@ -72,60 +76,45 @@ public class GroceryBagging {
 
 	// Finds nbr of vertex i 
 	private static ArrayList<Vertex> getNbrs(Vertex v) { 
-		int i = v.getX(); 
-		return graph.get(i).nbrs; 
+        int i = v.getX(); 
+        return graph.get(i).nbrs; 
 	} 
 
 	// Intersection of two sets 
 	private static ArrayList<Vertex> intersect(ArrayList<Vertex> arlFirst, 
-			ArrayList<Vertex> arlSecond) { 
-		ArrayList<Vertex> arlHold = new ArrayList<Vertex>(arlFirst); 
-		arlHold.retainAll(arlSecond); 
-		return arlHold; 
-	} 
-
-	// Union of two sets 
-	private ArrayList<Vertex> union(ArrayList<Vertex> arlFirst, 
-			ArrayList<Vertex> arlSecond) { 
-		ArrayList<Vertex> arlHold = new ArrayList<Vertex>(arlFirst); 
-		arlHold.addAll(arlSecond); 
-		return arlHold; 
-	} 
-
-	// Removes the neigbours 
-	private ArrayList<Vertex> removeNbrs(ArrayList<Vertex> arlFirst, Vertex v) { 
-		ArrayList<Vertex> arlHold = new ArrayList<Vertex>(arlFirst); 
-		arlHold.removeAll(v.getNbrs()); 
-		return arlHold; 
-	} 
-
+            ArrayList<Vertex> arlSecond) { 
+        ArrayList<Vertex> arlHold = new ArrayList<Vertex>(arlFirst); 
+        arlHold.retainAll(arlSecond); 
+        return arlHold; 
+	}
+	
 	// Version without a Pivot 
 	private static void Bron_KerboschWithoutPivot(ArrayList<Vertex> R, ArrayList<Vertex> P,
 			ArrayList<Vertex> X, String pre) { 
 
-		if ((P.size() == 0) && (X.size() == 0)) { 
-			addClique(R);
-			return; 
-		}
+        if ((P.size() == 0) && (X.size() == 0)) {
+            addClique(R); 
+            return; 
+        } 
 
-		ArrayList<Vertex> P1 = new ArrayList<Vertex>(P); 
+        ArrayList<Vertex> P1 = new ArrayList<Vertex>(P); 
 
-		for (Vertex v : P) { 
-			R.add(v); 
-			Bron_KerboschWithoutPivot(R, intersect(P1, getNbrs(v)), 
-					intersect(X, getNbrs(v)), pre + "\t"); 
-			R.remove(v); 
-			P1.remove(v); 
-			X.add(v); 
-		} 
+        for (Vertex v : P) { 
+            R.add(v); 
+            Bron_KerboschWithoutPivot(R, intersect(P1, getNbrs(v)), 
+                    intersect(X, getNbrs(v)), pre + "\t"); 
+            R.remove(v); 
+            P1.remove(v); 
+            X.add(v); 
+        } 
 	} 
 
 	private static void Bron_KerboschPivotExecute() { 
-
-		ArrayList<Vertex> X = new ArrayList<Vertex>(); 
-		ArrayList<Vertex> R = new ArrayList<Vertex>(); 
-		ArrayList<Vertex> P = new ArrayList<Vertex>(graph); 
-		Bron_KerboschWithoutPivot(R, P, X, ""); 
+		
+        ArrayList<Vertex> X = new ArrayList<Vertex>(); 
+        ArrayList<Vertex> R = new ArrayList<Vertex>(); 
+        ArrayList<Vertex> P = new ArrayList<Vertex>(graph); 
+        Bron_KerboschWithoutPivot(R, P, X, "");
 	} 
 
 	private static void addClique(ArrayList<Vertex> R) {
@@ -146,40 +135,38 @@ public class GroceryBagging {
 		bags = new ArrayList<Bag>();
 		items = new ArrayList<Item>();
 
-		// TODO: Cannot create all items first
 		Item bread = new Item("bread");
-		Item rolls = new Item("rolls");
-		Item squash = new Item("squash");
-		Item meat = new Item("meat");
-		Item lima_beans = new Item("lima_beans");
-
 		bread.setNumber(0);
 		bread.setSize(3);
 		bread.setConstraint(1);
-		bread.addItems(rolls);
+		bread.addForbidden("rolls");
 		items.add(bread);
 
+		Item rolls = new Item("rolls");
 		rolls.setNumber(1);
 		rolls.setSize(2);
 		rolls.setConstraint(1);
-		rolls.addItems(bread);
+		rolls.addForbidden("bread");
 		items.add(rolls);
 
+		Item squash = new Item("squash");
 		squash.setNumber(2);
 		squash.setSize(3);
 		squash.setConstraint(-1);
-		squash.addItems(meat);
+		squash.addForbidden("meat");
 		items.add(squash);
 
+		Item meat = new Item("meat");
 		meat.setNumber(3);
 		meat.setSize(5);
 		meat.setConstraint(0);
 		items.add(meat);
 
+		Item lima_beans = new Item("lima_beans");
 		lima_beans.setNumber(4);
 		lima_beans.setSize(1);
-		lima_beans.setConstraint(-2);
-		lima_beans.addItems(meat);
+		lima_beans.setConstraint(-1);
+		lima_beans.addForbidden("meat");
 		items.add(lima_beans);
 
 		numItems = 5;
@@ -187,39 +174,45 @@ public class GroceryBagging {
 		createGraph(numItems);
 		// replace with parseFile
 
+		// Find all maximum cliques
 		Bron_KerboschPivotExecute();
-		System.out.println(cliques);
 
-//		if (cliques.size() > numBags) {
-//			System.out.println("failure");
-//		} else {
-//			ArrayList<Integer> cliqueItems;
-//			int itemInd = 0;
-//			int currNumBags = 0;
-//			Item item = new Item();
-//			for (Clique clique: cliques) {
-//				cliqueItems = clique.getVertices();
-//				while (!cliqueItems.isEmpty()) {
-//					Bag bag = new Bag(bagMaxSize);
-//					currNumBags++;
-//					if (currNumBags > numBags) {
-//						System.out.println("failure");
-//						 System.exit(0);
-//					}
-//					while (bag.getCurrentSize() < bagMaxSize) {
-//						itemInd = cliqueItems.remove(0);
-//						item = items.get(itemInd);
-//						if (item.getSize() > bagMaxSize) {
-//							System.out.println("failure");
-//							 System.exit(0);
-//						}
-//						if (bag.getCurrentSize() + item.getSize() <= bagMaxSize) {
-//							bag.addItem(item);
-//						}
-//					}
-//					bags.add(bag);
-//				}
-//			}
-//		}
+		if (cliques.size() > numBags) {
+			System.out.println("failure");
+		} else {
+			ArrayList<Integer> cliqueItems;
+			int itemInd = 0;
+			int currNumBags = 0;
+			Item item = new Item();
+			
+			for (Clique clique: cliques) {
+				cliqueItems = clique.getVertices();
+				while (!cliqueItems.isEmpty()) {
+					Bag bag = new Bag(bagMaxSize);
+					currNumBags++;
+					if (currNumBags > numBags) {
+						System.out.println("failure");
+						 System.exit(0);
+					}
+					while (!cliqueItems.isEmpty() && bag.getCurrentSize() < bagMaxSize) {
+						itemInd = cliqueItems.remove(0);
+						item = items.get(itemInd);
+						if (item.getSize() > bagMaxSize) {
+							System.out.println("failure");
+							 System.exit(0);
+						}
+						if (bag.getCurrentSize() + item.getSize() <= bagMaxSize) {
+							bag.addItemToBag(item);
+						}
+					}
+					bags.add(bag);
+				}
+			}
+			
+			System.out.println("success");
+			for (Bag bag : bags) {
+				System.out.println(bag);
+			}
+		}
 	}
 }

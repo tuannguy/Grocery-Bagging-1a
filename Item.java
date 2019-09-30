@@ -7,14 +7,14 @@ public class Item {
 	private String name;
 	private int size;
 	private int constraint;
-	private ArrayList<Item> items;
+	private ArrayList<String> forbidden;
 	private int number;
 	
 	public Item() {
 		name = "";
 		size = 0;
 		constraint = 0;
-		items = new ArrayList<Item>();
+		forbidden = new ArrayList<String>();
 		number = -1;
 	}
 	
@@ -22,7 +22,7 @@ public class Item {
 		this.name = name;
 		size = 0;
 		constraint = 0;
-		items = new ArrayList<Item>();
+		forbidden = new ArrayList<String>();
 		number = -1;
 	}
 	
@@ -30,7 +30,7 @@ public class Item {
 		this.name = name;
 		this.size = size;
 		constraint = 0;
-		items = new ArrayList<Item>();
+		forbidden = new ArrayList<String>();
 		number = -1;
 	}
 
@@ -58,12 +58,12 @@ public class Item {
 		this.constraint = constraint;
 	}
 
-	public ArrayList<Item> getItems() {
-		return items;
+	public ArrayList<String> getForbidden() {
+		return forbidden;
 	}
 
-	public void setItems(ArrayList<Item> items) {
-		this.items = items;
+	public void setForbidden(ArrayList<String> forbidden) {
+		this.forbidden = forbidden;
 	}
 
 	public int getNumber() {
@@ -74,11 +74,11 @@ public class Item {
 		this.number = number;
 	}
 	
-	public void addItems(Item item) {
-		items.add(item);
+	public void addForbidden(String item) {
+		forbidden.add(item);
 	}
 	
-	public boolean checkItems(Item item) {
-		return items.contains(item);
+	public boolean checkItems(String item) {
+		return forbidden.contains(item);
 	}
 }
