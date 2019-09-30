@@ -34,6 +34,10 @@ public class Clique {
 		numVertices++;
 	}
 	
+	public boolean contains(int v) {
+		return vertices.contains(v);
+	}
+	
 	public String toString() {
 		String ret = "";
 		for (int v = 0; v < numVertices-1; v++) {
