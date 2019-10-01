@@ -81,4 +81,8 @@ public class Item {
 	public boolean checkItems(String item) {
 		return forbidden.contains(item);
 	}
+	
+	public String toString() {
+		return name;
+	}
 }
