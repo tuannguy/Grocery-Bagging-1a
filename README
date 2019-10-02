@@ -3,7 +3,7 @@ Cs 457 Project 1
 Tuan Nguyen
 Lam Nguyen
 Connor Wood
-
+----------------======
 
 
 Design
@@ -26,6 +26,152 @@ Testing
 
 (Connor) -- With the file parser, I made sure to include code that considers invalid inputs.  For example, since each grocery should only contain a single '+' or '-', then if there are either both or more than one of either constraint, the program will send an error message then exit.  Similarly, if there's to be a list of items at all, there needs to be a constraint to begin with.  So thankfully the parser checks to make sure a list of items does not follow without a single '+' or '-' appearing first.
 
+(Lam and Tuan) -- With the Clique graph algorithm, we got it to work with the example input from the project description. However, when we made a few changes to that input, there were many problems that shown up. For example, here are a few of them: mishandling of items that did not have constraint on what items they could be put with; missing items in the result, and mostly just wrong results that didn't follow input constraints.
+
+With the partition approach (brute force), it went much smoother. There were fewer problems. The main ones were the inclusion of empty bags in the result set, duplicating results, and the handling of user input argument.
+
 Experimental results
 
+Test1:
 
+input:
+3
+7
+bread  3 + rolls
+rolls  2 + bread
+squash 3 - meat
+meat   5
+lima_beans 1 - meat
+
+output: just the textfile in the argument
+Success
+
+output: DFS
+Success
+bread	rolls
+squash	lima_beans
+meat
+
+output: BFS
+Success
+bread	rolls
+squash	lima_beans
+meat
+
+Test2:
+
+input:
+4
+7
+bread  3
+rolls  2 + bread
+squash 3 - meat
+meat   5
+lima_beans 1
+
+output: just the textfile in the argument
+Success
+
+output: DFS
+Success
+bread	rolls
+squash	lima_beans
+meat
+
+output: BFS
+Success
+bread	rolls
+squash	lima_beans
+meat
+Success
+bread	rolls
+squash
+meat	lima_beans
+Success
+bread	squash	lima_beans
+rolls
+meat
+Success
+bread	squash
+rolls
+meat	lima_beans
+Success
+bread	rolls
+squash
+meat
+lima_beans
+Success
+bread	squash
+rolls
+meat
+lima_beans
+Success
+bread	lima_beans
+rolls
+squash
+meat
+Success
+bread
+rolls
+squash	lima_beans
+meat
+Success
+bread
+rolls
+squash
+meat	lima_beans
+
+Test3:
+
+input:
+3
+7
+bread  3
+rolls  2 + bread
+squash 3 - meat
+meat   5 + bread
+lima_beans 1 + meat
+
+output: just the textfile in the argument
+Failure
+
+output: DFS
+Failure
+
+output: BFS
+Failure
+
+Test4:
+
+input:
+15
+7
+bread  3
+rolls  2 + bread
+squash 3 - meat
+meat   5 + bread
+lima_beans 1 + meat
+
+output: just the textfile in the argument
+Failure
+
+output: DFS
+Failure
+
+output: BFS
+Success
+bread	rolls
+squash
+meat
+lima_beans
+Success
+bread	squash
+rolls
+meat
+lima_beans
+Success
+bread
+rolls
+squash
+meat
+lima_beans

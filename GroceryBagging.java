@@ -14,6 +14,7 @@ public class GroceryBagging {
 	private static ArrayList<Bag> bags;
 	private static ArrayList<Item> items;
 	private static boolean result = true;
+	private static ArrayList<ArrayList<Bag>> bagsSet;
 
 	/**
 	 * File parsing takes place here.
@@ -76,6 +77,14 @@ public class GroceryBagging {
 			System.exit(1);
 		}
 
+	}
+	
+	private static boolean checkIfContains(ArrayList<Bag> b) {
+		for (ArrayList<Bag> bs : bagsSet) {
+			if (bs.toString().equals(b.toString()))
+				return false;
+		}
+		return true;
 	}
 
 	private static void dfs() {
@@ -148,7 +157,7 @@ public class GroceryBagging {
 				if (!goodPartition) {
 					bags.clear();
 				} else {
-					System.out.println("Success");
+					System.out.println("success");
 					if (result == false) return;
 							
 					for (Bag bag : bags) {
@@ -170,6 +179,7 @@ public class GroceryBagging {
 		Boolean goodPartition;
 		Boolean goodBag;
 		Bag newBag;
+		bagsSet = new ArrayList<ArrayList<Bag>>();
 
 		for (int blocks = 1; blocks <= numBags; ++blocks) {
 			// Iterate through each partition
@@ -230,17 +240,26 @@ public class GroceryBagging {
 					}
 				}
 				if (goodPartition) {
-					System.out.println("Success");
-					for (Bag bag : bags) {
-						System.out.println(bag);
+					if (checkIfContains(bags)) {
+						ArrayList<Bag> newBags = new ArrayList<>(bags);
+						bagsSet.add(newBags);
 					}
 					ret = true;
 				}
 				bags.clear();
 			}
 		}
-		if (!ret) {
-			System.out.println("Failure");
+		if (ret) {
+			
+			for (ArrayList<Bag> bs : bagsSet) {
+				System.out.println("success");
+				for (Bag bag : bs) {
+					System.out.println(bag);
+				}
+			}
+		}
+		else {
+			System.out.println("failure");
 		}
 	}
 
@@ -250,7 +269,7 @@ public class GroceryBagging {
 		items = new ArrayList<Item>();
 
 		if (args.length < 1) {
-			System.out.println("Usage: prog_name filename [-depth | -breadth]");
+			System.out.print("Usage: prog_name filename [-depth | -breadth]");
 			System.exit(0);
 		} else {
 			parseFile(args[0]);
@@ -273,7 +292,7 @@ public class GroceryBagging {
 			bfs();
 		}
 		else {
-			System.out.println("Usage: prog_name filename [-depth | -breadth]");
+			System.out.print("Usage: prog_name filename [-depth | -breadth]");
 			System.exit(0);
 		}
 	}
