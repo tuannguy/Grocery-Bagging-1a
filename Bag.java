@@ -43,9 +43,6 @@ public class Bag {
 		return numBagItems;
 	}
 
-	public void setNumItems(int numItems) {
-		this.numBagItems = numBagItems;
-	}
 
 	public ArrayList<Item> getBagItems() {
 		return bagItems;

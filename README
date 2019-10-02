@@ -1,0 +1,31 @@
+# Grocery-Bagging-1a
+Cs 457 Project 1
+Tuan Nguyen
+Lam Nguyen
+Connor Wood
+
+
+
+Design
+
+(Connor) -- I had created a simple file parser to create a list of Item-objects from an input file and pass on each description to the item it belongs to.  In other words, it detects the first word in an item line as the grocery's name, then considers the constraint it may posses, followed by adding the list of items that it can only be bagged/not be bagged with to that respective
+grocery.  The list of items constrained to the grocery in question are put as strings as to make processing and lookups easier.
+
+(Lam and Tuan) -- Tuan tried to use Clique graph algorithm to solve the problem but didn't had much luck finding a way to implement BFS, I also made a brute force way to implement DFS but also got struggled making BFS, so we came up with using "Partition" to solve both DFS and BFS.
+
+The Partition class is used to divide a list of items into all combinations of k subsets as k is the input integer, i.e. a list of <1,2,3> and k=2 will result in <(1,2),3>, <(1,3),2>, <(2,3),1>. It can be used to find all solutions for breadth-first search, or simply find one first good solution for depth-first.
+
+The Bag class is the bag object to carry item objects, which is using Item class. Bag has maxsize, currentSize variable and bagItems arrayList to add the Item objects in. Its toString() will print the name of every item in that bag.
+
+Item class has name, size, constraint variables and ArrayList<String> forbidden. "constraint" is a int variable that if it equals 1, it means "+" constraint and =-1 means otherwise, and 0 means it has no constraint.
+
+GroceryBagging is the driver class that has a parseFile(filename) method, dfs(), bfs() methods that uses Partition, and a main method.
+
+
+Testing
+
+(Connor) -- With the file parser, I made sure to include code that considers invalid inputs.  For example, since each grocery should only contain a single '+' or '-', then if there are either both or more than one of either constraint, the program will send an error message then exit.  Similarly, if there's to be a list of items at all, there needs to be a constraint to begin with.  So thankfully the parser checks to make sure a list of items does not follow without a single '+' or '-' appearing first.
+
+Experimental results
+
+

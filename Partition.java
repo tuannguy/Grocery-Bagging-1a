@@ -11,12 +11,11 @@ import java.util.NoSuchElementException;
 public class Partition<T> implements Iterable<List<List<T>>> {
 
     private final List<T> elements = new ArrayList<>();
-    private final int k;
+    private int k = 0;
 
     public Partition(List<T> elements, int k) {
         checkNumberK(k, elements.size());
         this.elements.addAll(elements);
-        this.k = k;
     }
 
     @Override
@@ -29,9 +28,12 @@ public class Partition<T> implements Iterable<List<List<T>>> {
             throw new IllegalArgumentException("The number K should be at least 1");
         }
 
-        if (k > numElements) {
-            throw new IllegalArgumentException("The number K should be at most " + numElements);
+        else if (k > numElements) {
+            this.k = numElements;
         }   
+        else {
+        	this.k = k;
+        }
     }
 
     private static final class PartitionIterator<T> 

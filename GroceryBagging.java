@@ -13,6 +13,7 @@ public class GroceryBagging {
 	private static int bagMaxSize;
 	private static ArrayList<Bag> bags;
 	private static ArrayList<Item> items;
+	private static boolean result = true;
 
 	/**
 	 * File parsing takes place here.
@@ -136,13 +137,20 @@ public class GroceryBagging {
 						}
 					}
 					if (goodBag && goodPartition) {
-						bags.add(newBag);
+						if (newBag.isEmpty()) {
+							goodPartition = false;
+						}
+						else {
+							bags.add(newBag);
+						}
 					}
 				}
 				if (!goodPartition) {
 					bags.clear();
 				} else {
-					System.out.println("success");
+					System.out.println("Success");
+					if (result == false) return;
+							
 					for (Bag bag : bags) {
 						System.out.println(bag);
 					}
@@ -213,11 +221,16 @@ public class GroceryBagging {
 						}
 					}
 					if (goodBag && goodPartition) {
-						bags.add(newBag);
+						if (newBag.isEmpty()) {
+							goodPartition = false;
+						}
+						else {
+							bags.add(newBag);
+						}
 					}
 				}
 				if (goodPartition) {
-					System.out.println("success");
+					System.out.println("Success");
 					for (Bag bag : bags) {
 						System.out.println(bag);
 					}
@@ -227,7 +240,7 @@ public class GroceryBagging {
 			}
 		}
 		if (!ret) {
-			System.out.println("failure");
+			System.out.println("Failure");
 		}
 	}
 
@@ -237,20 +250,31 @@ public class GroceryBagging {
 		items = new ArrayList<Item>();
 
 		if (args.length < 1) {
-			System.out.print("Usage: prog_name filename [-depth | -breadth]");
+			System.out.println("Usage: prog_name filename [-depth | -breadth]");
 			System.exit(0);
 		} else {
 			parseFile(args[0]);
 		}
-
-		//DEPTH FIRST
-		if (args.length == 2 && args[1].equals("-depth")) {
+		
+		//no optional argument
+		if (args.length == 1) {
+			//begin DFS
+			result = false;
 			dfs();
-
+		}
+		//DEPTH FIRST
+		else if (args.length == 2 && args[1].equals("-depth")) {
+			//begin DFS
+			dfs();
 		}
 		// BREADTH FIRST
-		else if (args.length == 2 && args[1].equals("-breath")) {
+		else if (args.length == 2 && args[1].equals("-breadth")) {
+			//begin BFS
 			bfs();
+		}
+		else {
+			System.out.println("Usage: prog_name filename [-depth | -breadth]");
+			System.exit(0);
 		}
 	}
 }
